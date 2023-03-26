@@ -5,10 +5,7 @@ import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.Data;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -44,10 +41,11 @@ public class FixedWindowCountRateLimit {
             window.count = 0;
         }
         if(window.count < FixedWindowCountRateLimit.WINDOW_COUNT_LIMIT){
+            System.out.println("pass");
             window.count++;
             return true;
         }
-        System.out.println("超过阈值");
+
         return false;
     }
 
@@ -62,7 +60,10 @@ public class FixedWindowCountRateLimit {
                 return a;
             }
         });
+        //统计成功
+        AtomicLong success = new AtomicLong();
         FixedWindowCountRateLimit limit = new FixedWindowCountRateLimit();
+        CountDownLatch latch = new CountDownLatch(1000);
         for(int i=0; i<1000; i++){
             final int index = i;
             try {
@@ -75,12 +76,22 @@ public class FixedWindowCountRateLimit {
                                 throw new RuntimeException(e);
                             }
                         }
-                        limit.limit();
+                        boolean flag = limit.limit();
+                        if(flag){
+                            success.incrementAndGet();
+                        }
+                        latch.countDown();
                     }
                 });
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+        try {
+            latch.await();
+            System.out.println("成功次数：" + success.get());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
