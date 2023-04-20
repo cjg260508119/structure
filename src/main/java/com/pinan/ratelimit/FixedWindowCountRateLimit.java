@@ -5,6 +5,8 @@ import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -50,8 +52,8 @@ public class FixedWindowCountRateLimit {
     }
 
     public static void main(String[] args) throws BlockException {
-        //Entry entry = SphU.entry("HelloWorld");
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 100, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1000), new ThreadFactory() {
+        Entry entry = SphU.entry("HelloWorld");
+        /*ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 100, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1000), new ThreadFactory() {
             private final AtomicLong count = new AtomicLong();
             public Thread newThread(Runnable r) {
                 long c = count.incrementAndGet();
@@ -92,6 +94,8 @@ public class FixedWindowCountRateLimit {
             System.out.println("成功次数：" + success.get());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        System.out.println(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) / 10 * 10);
+        System.out.println(1377 /10);
     }
 }
