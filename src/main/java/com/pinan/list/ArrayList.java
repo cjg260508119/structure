@@ -35,19 +35,25 @@ public class ArrayList<T> {
     }
 
     public static void main(String[] args){
-        ArrayList<String> arry = new ArrayList<>();
+        /*ArrayList<String> arry = new ArrayList<>();
         for(int i=0; i<11; i++){
             arry.add(new String(i + ""));
         }
         for(int i=0; i<11; i++){
             System.out.println(arry.get(i));
-        }
+        }*/
     }
 
     public void add(T t){
         ensureCapacity();
         elements[size] = t;
         size = size + 1;
+    }
+
+    public void add(T t, int idx){
+        ensureCapacity();
+        //从idx之后的元素全部往后移动
+        System.arraycopy(elements, idx, elements, idx+1, size-idx);
     }
 
     public T get(int idx){
