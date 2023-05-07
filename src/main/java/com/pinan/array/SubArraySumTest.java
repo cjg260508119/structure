@@ -29,7 +29,6 @@ public class SubArraySumTest {
     }
 
     public static int test0(int[] n, int k){
-
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
         int count = 0;
