@@ -11,16 +11,16 @@ import lombok.Setter;
  */
 public class DoublePointListTest {
 
-    @Setter
+    /*@Setter
     @Getter
     static class MyList<T>{
         Node<T> head;
         int size;
 
-        /**
+        *//**
          * 使用双指针删除倒数第k个,要求只遍历一次链表，不使用链表的长度属性
          * @param k 倒数位置
-         */
+         *//*
         public void doublePointDelete(int k){
 
             Node<T> left = head;
@@ -47,9 +47,9 @@ public class DoublePointListTest {
                 n.next = node;
             }
         }
-    }
+    }*/
 
-    @Getter
+    /*@Getter
     @Setter
     static class Node<T>{
         T t;
@@ -57,15 +57,15 @@ public class DoublePointListTest {
         public Node(T t){
             this.t = t;
         }
-    }
+    }*/
 
     public static void main(String[] args) {
-        MyList<String> myList = new MyList<>();
+        OneWayList<String> myList = new OneWayList<>();
         for(int i=0; i<6; i++){
             myList.add(i +"");
         }
         myList.doublePointDelete(2);
-        Node<String> n = myList.head;
+        OneWayList.Node<String> n = myList.head;
         while(n!=null){
             System.out.println(n.getT());
             n = n.next;
