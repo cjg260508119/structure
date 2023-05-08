@@ -1,7 +1,6 @@
 package com.pinan.stack;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 /**
  * @Author 26050
@@ -13,21 +12,23 @@ import java.util.Deque;
 public class MaxRectangularVolumeTest {
 
     public static void main(String[] args) {
-        Deque<Integer> que = new ArrayDeque<>();
-        System.out.println(que.peek());
+        /*Deque<Integer> que = new ArrayDeque<>();
+        System.out.println(que.peek());*/
+        List<Integer> l = new ArrayList<>(Arrays.asList(3,2,5,4,6,1,4,2));
+        System.out.println(test0(l.toArray(new Integer[l.size()])));
     }
 
-    public static int test0(int[] n){
+    public static int test0(Integer[] n){
         Deque<Integer> que = new ArrayDeque<>();
         int max = 0;
         for(int i=0; i<n.length; i++){
-            Integer pee = que.peek();
-            if(pee != null && n[pee.intValue()] > n[i]){
+            while(!que.isEmpty() && n[que.peek()] > n[i]) {
+                Integer pee = que.peek();
                 que.pop();
                 int left = que.peek() == null ? -1 : que.peek();
                 int right = i;
-                int wide = i - left - 1;
-                max = Math.max(max, wide * pee);
+                int wide = right - left - 1;
+                max = Math.max(max, wide * n[pee]);
             }
             que.push(i);
         }
@@ -36,8 +37,8 @@ public class MaxRectangularVolumeTest {
             int left = que.peek() == null ? -1 :que.peek();
             int right = n.length;
             int wide = right - left - 1;
-            max = Math.max(max, wide * pee);
+            max = Math.max(max, wide * n[pee]);
         }
-        return 0;
+        return max;
     }
 }
