@@ -3,6 +3,8 @@ package com.pinan.tree;
 import lombok.Data;
 
 import java.util.Comparator;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * @Author 26050
@@ -50,11 +52,60 @@ public class BinaryTreeTest<T extends Comparable> {
 
         BinaryNode<T> node = new BinaryNode<>(parent, t);
         if(parent.getT().compareTo(t) < 0){
-            parent.left = node;
-        }else{
             parent.right = node;
+        }else{
+            parent.left = node;
         }
+        size++;
         return true;
+    }
+
+    /**
+     * 中序递归遍历
+     */
+    public void inOrderRecursion(BinaryNode<T> node){
+        //递归基准情形
+        if(node == null){
+            return;
+        }
+        //遍历左边
+        inOrderRecursion(node.left);
+        //中间打印
+        System.out.println(node.getT());
+        //遍历右边
+        inOrderRecursion(node.right);
+    }
+
+    /**
+     * 中序迭代遍历
+     */
+    public void inOrderIterate(){
+        Deque<BinaryNode<T>> de = new LinkedList<>();
+        BinaryNode<T> node = this.root;
+        while(node != null || !de.isEmpty()){
+            while(node != null){
+                de.push(node);
+                node = node.left;
+            }
+
+            node = de.pop();
+            System.out.println(node.getT());
+            node = node.right;
+        }
+    }
+
+    /**
+     * 把每个节点的值替换成所有大于改节点的值的节点之和
+     * 思路：使用中序遍历的反转，比如中序遍历使用的顺序是左孩子-》当前节点-》右孩子的顺序，
+     * 反转后使用右孩子-》当前节点-》左孩子，这样遍历可以确保每次遍历到某个节点后累加和刚好等于所有大于
+     * 该节点的节点之和
+     */
+    public void convertBST(){
+        /*Deque<T> de = new LinkedList<>();
+        BinaryNode<T> node = this.root;
+        while(node != null || !de.isEmpty()){
+            while()
+        }*/
     }
 
 
@@ -69,8 +120,10 @@ public class BinaryTreeTest<T extends Comparable> {
         bi.insert(3);
         bi.insert(2);
 
-        BinaryNode<Integer> b = bi.find(bi.root, 3);
-        System.out.println(b.getT());
+        /*BinaryNode<Integer> b = bi.find(bi.root, 3);
+        System.out.println(b.getT());*/
+        //bi.inOrderRecursion(bi.root);
+        bi.inOrderIterate();
     }
 
 
