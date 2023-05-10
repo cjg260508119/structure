@@ -101,11 +101,20 @@ public class BinaryTreeTest<T extends Comparable> {
      * 该节点的节点之和
      */
     public void convertBST(){
-        /*Deque<T> de = new LinkedList<>();
-        BinaryNode<T> node = this.root;
+        Deque<BinaryNode> de = new LinkedList<>();
+        BinaryNode<Integer> node = (BinaryNode<Integer>) this.root;
+        int sum = 0;
         while(node != null || !de.isEmpty()){
-            while()
-        }*/
+            while(node != null){
+                de.push(node);
+                node = node.right;
+            }
+
+            node = de.pop();
+            sum += node.getT();
+            node.setT(sum);
+            node = node.left;
+        }
     }
 
 
@@ -123,6 +132,9 @@ public class BinaryTreeTest<T extends Comparable> {
         /*BinaryNode<Integer> b = bi.find(bi.root, 3);
         System.out.println(b.getT());*/
         //bi.inOrderRecursion(bi.root);
+        //bi.inOrderIterate();
+        bi.convertBST();
+
         bi.inOrderIterate();
     }
 
