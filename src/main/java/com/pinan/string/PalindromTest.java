@@ -3,6 +3,7 @@ package com.pinan.string;
 /**
  * @Author 26050
  * 回文字符串相关的算法
+ * 使用双指针处理
  * @Date 2023/5/6 17:52
  * @Version 1.0
  */
